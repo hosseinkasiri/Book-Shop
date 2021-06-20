@@ -24,8 +24,10 @@ class ListProductAdapter(private val clickListener: ItemClickListener<Product>):
     class ListProductHolder private constructor(private val binding: ItemProductBinding):
         RecyclerView.ViewHolder(binding.root){
 
-        fun bind(product: Product, ClickListener: ItemClickListener<Product>){
-
+        fun bind(product: Product, clickListener: ItemClickListener<Product>){
+            binding.product = product
+            binding.clickListener = clickListener
+            binding.executePendingBindings()
         }
 
         companion object{
