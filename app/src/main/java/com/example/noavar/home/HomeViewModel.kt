@@ -49,4 +49,8 @@ class HomeViewModel: ViewModel() {
         super.onCleared()
         job.cancel()
     }
+
+    fun reloading(){
+        getProperties()
+    }
 }

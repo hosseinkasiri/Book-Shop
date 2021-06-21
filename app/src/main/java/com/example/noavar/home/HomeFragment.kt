@@ -33,21 +33,31 @@ class HomeFragment : Fragment() {
             productAdapter.submitList(products)
         })
         binding.productsRecycler.adapter = productAdapter
+        binding.reloadingButton.setOnClickListener {
+            viewModel.reloading()
+        }
+        handleExceptions()
+        return binding.root
+    }
+
+    private fun handleExceptions() {
         viewModel.status.observe(viewLifecycleOwner, Observer { status ->
             when (status) {
                 ApiStatus.LOADING -> {
                     binding.statusImage.visibility = View.VISIBLE
                     binding.statusImage.setImageResource(R.drawable.loading_animation)
+                    binding.reloadingButton.visibility = View.GONE
                 }
                 ApiStatus.ERROR -> {
                     binding.statusImage.visibility = View.VISIBLE
                     binding.statusImage.setImageResource(R.drawable.ic_connection_error)
+                    binding.reloadingButton.visibility = View.VISIBLE
                 }
                 ApiStatus.DONE -> {
                     binding.statusImage.visibility = View.GONE
+                    binding.reloadingButton.visibility = View.GONE
                 }
             }
         })
-        return binding.root
     }
 }
