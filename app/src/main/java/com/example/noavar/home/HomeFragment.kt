@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.noavar.customViews.ListProductAdapter
+import com.example.noavar.R
+import com.example.noavar.adapters.ListProductAdapter
 import com.example.noavar.databinding.FragmentHomeBinding
+import com.example.noavar.utils.ApiStatus
 import com.example.noavar.utils.ItemClickListener
 
 class HomeFragment : Fragment() {
@@ -27,10 +29,25 @@ class HomeFragment : Fragment() {
         productAdapter = ListProductAdapter(ItemClickListener {
 
         })
-        viewModel.products.observe(viewLifecycleOwner, Observer {
-            productAdapter.submitList(it)
+        viewModel.products.observe(viewLifecycleOwner, Observer { products ->
+            productAdapter.submitList(products)
         })
         binding.productsRecycler.adapter = productAdapter
+        viewModel.status.observe(viewLifecycleOwner, Observer { status ->
+            when (status) {
+                ApiStatus.LOADING -> {
+                    binding.statusImage.visibility = View.VISIBLE
+                    binding.statusImage.setImageResource(R.drawable.loading_animation)
+                }
+                ApiStatus.ERROR -> {
+                    binding.statusImage.visibility = View.VISIBLE
+                    binding.statusImage.setImageResource(R.drawable.ic_connection_error)
+                }
+                ApiStatus.DONE -> {
+                    binding.statusImage.visibility = View.GONE
+                }
+            }
+        })
         return binding.root
     }
 }
