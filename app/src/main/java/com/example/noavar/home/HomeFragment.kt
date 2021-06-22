@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.noavar.R
 import com.example.noavar.adapters.ListProductAdapter
 import com.example.noavar.databinding.FragmentHomeBinding
@@ -26,8 +27,8 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(layoutInflater)
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         binding.viewModel = viewModel
-        productAdapter = ListProductAdapter(ItemClickListener {
-
+        productAdapter = ListProductAdapter(ItemClickListener { product ->
+            binding.webView.loadUrl(product.url.toString())
         })
         viewModel.products.observe(viewLifecycleOwner, Observer { products ->
             productAdapter.submitList(products)
