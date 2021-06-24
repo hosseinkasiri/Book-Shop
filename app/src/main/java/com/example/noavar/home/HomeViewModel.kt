@@ -6,7 +6,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.noavar.database.ProductDatabase
-import com.example.noavar.database.ProductDatabaseDao
 import com.example.noavar.model.Product
 import com.example.noavar.network.ProductRepository
 import com.example.noavar.network.ProductRepositoryImpl
@@ -18,7 +17,7 @@ class HomeViewModel(application: Application):
     AndroidViewModel(application) {
 
     private val job = Job()
-    private val coroutineScope = CoroutineScope(Dispatchers.Main + job)
+    private val coroutineScope = CoroutineScope(Dispatchers.Main+ job)
     private val repository: ProductRepository = ProductRepositoryImpl()
     private val database = ProductDatabase.getInstance(application).productDatabaseDao
 
@@ -26,8 +25,11 @@ class HomeViewModel(application: Application):
     val products: LiveData<List<Product>> get() = _products
     private val _status = MutableLiveData<ApiStatus>()
     val status: LiveData<ApiStatus> get() = _status
+    private val _isEmptyDatabase = MutableLiveData<Boolean>()
+    val isEmptyDatabase: LiveData<Boolean> get() = _isEmptyDatabase
 
     init {
+        initializeDatabaseEmpty()
         getProperties()
     }
 
@@ -55,12 +57,36 @@ class HomeViewModel(application: Application):
         }
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        job.cancel()
+    private suspend fun getProductsFromDatabase(): List<Product>{
+        return withContext(Dispatchers.IO){
+            database.getAllProducts()
+        }
+    }
+
+    private suspend fun isEmpty(): Boolean{
+        return withContext(Dispatchers.IO){
+            database.getAllProducts().isEmpty()
+        }
+    }
+
+    private fun initializeDatabaseEmpty(){
+         coroutineScope.launch {
+             _isEmptyDatabase.value = isEmpty()
+        }
     }
 
     fun reloading(){
         getProperties()
+    }
+
+    fun offlineMode(){
+        coroutineScope.launch {
+            _products.value = getProductsFromDatabase()
+        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        job.cancel()
     }
 }

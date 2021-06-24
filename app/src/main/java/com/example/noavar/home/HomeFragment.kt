@@ -1,5 +1,6 @@
 package com.example.noavar.home
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,7 +10,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.noavar.R
 import com.example.noavar.adapters.ListProductAdapter
-import com.example.noavar.database.ProductDatabase
 import com.example.noavar.databinding.FragmentHomeBinding
 import com.example.noavar.utils.ApiStatus
 import com.example.noavar.utils.ItemClickListener
@@ -37,9 +37,6 @@ class HomeFragment : Fragment() {
             productAdapter.submitList(products)
         })
         binding.productsRecycler.adapter = productAdapter
-        binding.reloadingButton.setOnClickListener {
-            viewModel.reloading()
-        }
         handleExceptions()
         return binding.root
     }
@@ -50,16 +47,26 @@ class HomeFragment : Fragment() {
                 ApiStatus.LOADING -> {
                     binding.statusImage.visibility = View.VISIBLE
                     binding.statusImage.setImageResource(R.drawable.loading_animation)
-                    binding.reloadingButton.visibility = View.GONE
+                }
+                ApiStatus.DONE -> {
+                    binding.statusImage.visibility = View.GONE
                 }
                 ApiStatus.ERROR -> {
                     binding.statusImage.visibility = View.VISIBLE
                     binding.statusImage.setImageResource(R.drawable.ic_connection_error)
-                    binding.reloadingButton.visibility = View.VISIBLE
-                }
-                ApiStatus.DONE -> {
-                    binding.statusImage.visibility = View.GONE
-                    binding.reloadingButton.visibility = View.GONE
+                    val dialog = AlertDialog.Builder(activity)
+                    dialog.apply {
+                        setTitle("مشکل در اتصال به سرور")
+                        setPositiveButton("تلاش مجدد") { _, _ ->
+                            viewModel.reloading()
+                        }
+                        if (!viewModel.isEmptyDatabase.value!!){
+                            setNegativeButton("استفاده آفلاین") { _, _ ->
+                                viewModel.offlineMode()
+                                binding.statusImage.visibility = View.GONE
+                            }
+                        }
+                    }.create().show()
                 }
             }
         })
