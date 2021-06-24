@@ -1,17 +1,21 @@
 package com.example.noavar.model
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 
+@Entity(tableName = "product_table")
 data class Product(
-    @Json(name = "product_id")
-    val id: Int?,
-    @Json(name = "product_title")
+    @PrimaryKey @Json(name = "product_id")
+    val id: Int,
+    @ColumnInfo @Json(name = "product_title")
     val productTitle: String?,
-    @Json(name = "product_picture")
+    @ColumnInfo @Json(name = "product_picture")
     val picture: String?,
-    @Json(name = "product_regular_price")
+    @ColumnInfo @Json(name = "product_regular_price")
     val regularPrice: String?,
-    @Json(name = "product_sale_price")
+    @ColumnInfo @Json(name = "product_sale_price")
     val salePrice: String?,
-    @Json(name = "product_url")
+    @ColumnInfo @Json(name = "product_url")
     val url: String?)
