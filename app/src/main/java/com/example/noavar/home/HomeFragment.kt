@@ -56,12 +56,12 @@ class HomeFragment : Fragment() {
                     binding.statusImage.setImageResource(R.drawable.ic_connection_error)
                     val dialog = AlertDialog.Builder(activity)
                     dialog.apply {
-                        setTitle("مشکل در اتصال به سرور")
-                        setPositiveButton("تلاش مجدد") { _, _ ->
+                        setTitle(R.string.problemConnecting)
+                        setPositiveButton(R.string.tryAgain) { _, _ ->
                             viewModel.reloading()
                         }
                         if (!viewModel.isEmptyDatabase.value!!){
-                            setNegativeButton("استفاده آفلاین") { _, _ ->
+                            setNegativeButton(R.string.offlineMode) { _, _ ->
                                 viewModel.offlineMode()
                                 binding.statusImage.visibility = View.GONE
                             }
