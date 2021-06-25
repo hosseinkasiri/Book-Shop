@@ -1,4 +1,4 @@
-package com.example.noavar.home
+package com.example.noavar.scene.home
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.noavar.R
-import com.example.noavar.adapters.ListProductAdapter
+import com.example.noavar.data.adapters.ListProductAdapter
 import com.example.noavar.databinding.FragmentHomeBinding
 import com.example.noavar.utils.ApiStatus
 import com.example.noavar.utils.ItemClickListener

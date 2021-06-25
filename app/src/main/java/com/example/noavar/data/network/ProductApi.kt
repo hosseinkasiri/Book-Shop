@@ -1,4 +1,4 @@
-package com.example.noavar.network
+package com.example.noavar.data.network
 
 import com.example.noavar.model.NetworkResult
 import com.example.noavar.model.Product

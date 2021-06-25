@@ -1,4 +1,4 @@
-package com.example.noavar.network
+package com.example.noavar.data.network
 
 interface ProductRepository {
     fun getProducts(): ProductApi

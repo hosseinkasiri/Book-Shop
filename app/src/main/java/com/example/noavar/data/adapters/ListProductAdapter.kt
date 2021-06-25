@@ -1,4 +1,4 @@
-package com.example.noavar.adapters
+package com.example.noavar.data.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

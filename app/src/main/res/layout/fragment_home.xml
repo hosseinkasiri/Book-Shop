@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.noavar.home.HomeViewModel" />
+            type="com.example.noavar.scene.home.HomeViewModel" />
     </data>
 
     <LinearLayout
@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="8dp"
-            tools:context=".home.HomeFragment">
+            tools:context=".scene.home.HomeFragment">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/productsRecycler"

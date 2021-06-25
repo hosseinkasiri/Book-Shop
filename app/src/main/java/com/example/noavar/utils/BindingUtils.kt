@@ -1,6 +1,5 @@
 package com.example.noavar.utils
 
-import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -48,21 +47,4 @@ fun bindPrice(textView: TextView, price: String?){
     }
     array.reverse()
     textView.text = array.joinToString("") + " " + "تومان"
-}
-
-@BindingAdapter("ApiStatus")
-fun bindStatus(statusImageView: ImageView, status: ApiStatus?) {
-    when (status) {
-        ApiStatus.LOADING -> {
-            statusImageView.visibility = View.VISIBLE
-            statusImageView.setImageResource(R.drawable.loading_animation)
-        }
-        ApiStatus.ERROR -> {
-            statusImageView.visibility = View.VISIBLE
-            statusImageView.setImageResource(R.drawable.ic_connection_error)
-        }
-        ApiStatus.DONE -> {
-            statusImageView.visibility = View.GONE
-        }
-    }
 }

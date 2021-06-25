@@ -1,4 +1,4 @@
-package com.example.noavar.home
+package com.example.noavar.scene.home
 
 import android.app.Application
 import androidx.lifecycle.ViewModel

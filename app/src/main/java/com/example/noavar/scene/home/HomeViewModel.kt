@@ -1,14 +1,14 @@
-package com.example.noavar.home
+package com.example.noavar.scene.home
 
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.noavar.database.ProductDatabase
+import com.example.noavar.data.database.ProductDatabase
 import com.example.noavar.model.Product
-import com.example.noavar.network.ProductRepository
-import com.example.noavar.network.ProductRepositoryImpl
+import com.example.noavar.data.network.ProductRepository
+import com.example.noavar.data.network.ProductRepositoryImpl
 import com.example.noavar.utils.ApiStatus
 import kotlinx.coroutines.*
 import java.lang.Exception

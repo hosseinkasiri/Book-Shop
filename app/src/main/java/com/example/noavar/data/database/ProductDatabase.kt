@@ -1,4 +1,4 @@
-package com.example.noavar.database
+package com.example.noavar.data.database
 
 import android.content.Context
 import androidx.room.Database
